@@ -1,0 +1,89 @@
+<div class="space-y-6">
+<!-- สถิติหนังสือ -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+  <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex items-start gap-3">
+    <div class="p-2 rounded-xl bg-slate-50 border border-slate-100">
+      <div class="icon-placeholder"></div>
+    </div>
+    <div class="flex-1">
+      <div class="text-xs text-slate-500">หนังสือรับวันนี้</div>
+      <div class="text-2xl font-semibold text-slate-900 leading-tight">5</div>
+      <div class="text-[11px] text-slate-400 mt-1">ระบบลงเวลาอัตโนมัติ</div>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex items-start gap-3">
+    <div class="p-2 rounded-xl bg-slate-50 border border-slate-100">
+      <div class="icon-placeholder"></div>
+    </div>
+    <div class="flex-1">
+      <div class="text-xs text-slate-500">หนังสือส่งวันนี้</div>
+      <div class="text-2xl font-semibold text-slate-900 leading-tight">3</div>
+      <div class="text-[11px] text-slate-400 mt-1">พร้อมหมายเลขติดตาม</div>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex items-start gap-3">
+    <div class="p-2 rounded-xl bg-slate-50 border border-slate-100">
+      <div class="icon-placeholder"></div>
+    </div>
+    <div class="flex-1">
+      <div class="text-xs text-slate-500">ทั้งหมดในระบบ</div>
+      <div class="text-2xl font-semibold text-slate-900 leading-tight">12</div>
+      <div class="text-[11px] text-slate-400 mt-1">รวมรับ-ส่งและแฟ้ม</div>
+    </div>
+  </div>
+</div>
+
+<!-- ตารางรายการล่าสุด -->
+<div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+  <div class="flex items-center justify-between mb-3">
+    <div>
+      <div class="text-sm font-semibold text-slate-900">รายการล่าสุด</div>
+      <div class="text-xs text-slate-500 mt-0.5">6 รายการล่าสุดในระบบ</div>
+    </div>
+    <button class="text-xs bg-slate-900 text-white px-3 py-1.5 rounded-xl flex items-center gap-2">
+      <div class="icon-placeholder"></div>
+      ดูทั้งหมด
+    </button>
+  </div>
+  
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm">
+      <thead>
+        <tr class="text-left text-slate-500 border-b">
+          <th class="py-2">ประเภท</th>
+          <th class="py-2">เลขทะเบียน</th>
+          <th class="py-2">เรื่อง</th>
+          <th class="py-2">ต้นทาง/ปลายทาง</th>
+          <th class="py-2">วิธีการส่ง</th>
+          <th class="py-2">วันที่</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="py-2">
+            <span class="text-[11px] px-2 py-1 rounded-full bg-green-50 text-green-700 border border-green-200">รับ</span>
+          </td>
+          <td class="py-2 font-mono text-xs">IN20250828-1234</td>
+          <td class="py-2">ขอความร่วมมือจัดส่งข้อมูลไตรมาส 3</td>
+          <td class="py-2">สำนักนโยบาย</td>
+          <td class="py-2">ภายในระบบ</td>
+          <td class="py-2">2025-08-28 09:05</td>
+        </tr>
+        <tr>
+          <td class="py-2">
+            <span class="text-[11px] px-2 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">ส่ง</span>
+          </td>
+          <td class="py-2 font-mono text-xs">OUT20250828-2345</td>
+          <td class="py-2">หนังสือแจ้งกำหนดส่งรายงาน</td>
+          <td class="py-2">หน่วยงานภายนอก A</td>
+          <td class="py-2">ไปรษณีย์</td>
+          <td class="py-2">2025-08-28 14:20</td>
+        </tr>
+        <!-- เพิ่มแถวข้อมูลอื่นๆ ตามต้องการ -->
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
