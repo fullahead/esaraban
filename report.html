@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reports Panel (HTML + Tailwind)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 0.375rem;
+      padding: 0.5rem 0.75rem; border-radius: 0.5rem;
+      font-size: 0.875rem; line-height: 1.25rem;
+      border: 1px solid rgb(226 232 240 / 1);
+      background: white; color: rgb(71 85 105 / 1);
+      transition: background-color .15s;
+    }
+    .btn-secondary:hover { background: rgb(248 250 252 / 1); }
+  </style>
+</head>
+<body class="bg-white text-slate-900 antialiased">
+  <main class="max-w-6xl mx-auto p-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <!-- ตารางข้อมูล (ซ้าย) -->
+      <div class="lg:col-span-2">
+        <div class="rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <div class="px-4 py-3 border-b border-slate-100">
+            <h2 class="text-lg font-semibold">ตารางทะเบียน</h2>
+            <p class="text-xs text-slate-500">ตัวอย่าง RegisterTable (Static)</p>
+          </div>
+          <div class="p-4 overflow-x-auto">
+            <table class="min-w-full text-sm border border-slate-200">
+              <thead class="bg-slate-100">
+                <tr>
+                  <th class="px-3 py-2 border text-left">เลขทะเบียน</th>
+                  <th class="px-3 py-2 border text-left">เรื่อง</th>
+                  <th class="px-3 py-2 border text-left">วันที่</th>
+                  <th class="px-3 py-2 border text-left">ประเภท</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-3 py-2 border font-mono">RB-0001</td>
+                  <td class="px-3 py-2 border">คำสั่งแต่งตั้งคณะทำงาน</td>
+                  <td class="px-3 py-2 border">1 ก.ย. 2568</td>
+                  <td class="px-3 py-2 border">รับ</td>
+                </tr>
+                <tr class="bg-slate-50">
+                  <td class="px-3 py-2 border font-mono">SB-0042</td>
+                  <td class="px-3 py-2 border">หนังสือเชิญประชุมวิชาการ</td>
+                  <td class="px-3 py-2 border">2 ก.ย. 2568</td>
+                  <td class="px-3 py-2 border">ส่ง</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- แผงด้านขวา -->
+      <div class="space-y-4">
+
+        <!-- Card: ประเภทรายงาน -->
+        <div class="rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <div class="px-4 py-3 border-b border-slate-100">
+            <h3 class="text-base font-semibold">ประเภทรายงาน</h3>
+            <p class="text-xs text-slate-500">เลือกรูปแบบการแสดงผล</p>
+          </div>
+          <div class="p-4">
+            <div class="grid grid-cols-2 gap-2">
+              <button class="btn-secondary">📄 สรุป รับ-ส่ง</button>
+              <button class="btn-secondary">📄 สมุดทะเบียน (ภายใน)</button>
+              <button class="btn-secondary">📄 สมุดทะเบียน (ภายนอก)</button>
+              <button class="btn-secondary">📄 รายงานติดตาม</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: ส่งออก -->
+        <div class="rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <div class="px-4 py-3 border-b border-slate-100">
+            <h3 class="text-base font-semibold">ส่งออก (Export)</h3>
+          </div>
+          <div class="p-4">
+            <div class="grid grid-cols-4 gap-2">
+              <button class="btn-secondary">Word</button>
+              <button class="btn-secondary">Excel</button>
+              <button class="btn-secondary">PDF</button>
+              <button class="btn-secondary">HTML</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+</body>
+</html>

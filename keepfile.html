@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FilesPanel (HTML + Tailwind)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .btn-secondary {
+        display: inline-flex; align-items: center; gap: 0.375rem;
+        padding: 0.375rem 0.5rem; border-radius: 0.5rem;
+        font-size: 0.75rem; line-height: 1rem;
+        border: 1px solid rgb(226 232 240 / 1);
+        background: white; color: rgb(71 85 105 / 1);
+        transition: background-color .15s;
+      }
+      .btn-secondary:hover { background: rgb(248 250 252 / 1); }
+    </style>
+  </head>
+  <body class="bg-white text-slate-900 antialiased">
+    <main class="max-w-6xl mx-auto p-6 space-y-6">
+      <h1 class="text-2xl font-semibold">แฟ้มเอกสารตามเดือน</h1>
+     
+
+      <!-- Group: กันยายน 2025 -->
+      <div class="rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div class="flex items-center justify-between px-4 py-3 border-b border-slate-100">
+          <div>
+            <div class="text-base font-semibold text-slate-900">แฟ้ม: 2025-09</div>
+            <div class="text-xs text-slate-500 mt-0.5">3 เอกสาร</div>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div class="border rounded-xl p-3 bg-slate-50">
+              <div class="text-xs text-slate-500">รับ • 1 ก.ย. 2568</div>
+              <div class="font-medium text-slate-900 mt-1 line-clamp-2">คำสั่งแต่งตั้งคณะทำงานโครงการ A</div>
+              <div class="text-xs text-slate-600 mt-1">เลขทะเบียน: <span class="font-mono">RB-0001</span></div>
+              <div class="flex items-center gap-2 mt-2">
+                <button class="btn-secondary">ดาวน์โหลด</button>
+                <button class="btn-secondary">อ้างถึง</button>
+              </div>
+            </div>
+
+            <div class="border rounded-xl p-3 bg-slate-50">
+              <div class="text-xs text-slate-500">ส่ง • 2 ก.ย. 2568</div>
+              <div class="font-medium text-slate-900 mt-1 line-clamp-2">หนังสือเชิญประชุมวิชาการ ประจำเดือนกันยายน</div>
+              <div class="text-xs text-slate-600 mt-1">เลขทะเบียน: <span class="font-mono">SB-0042</span></div>
+              <div class="flex items-center gap-2 mt-2">
+                <button class="btn-secondary">ดาวน์โหลด</button>
+                <button class="btn-secondary">อ้างถึง</button>
+              </div>
+            </div>
+
+            <div class="border rounded-xl p-3 bg-slate-50">
+              <div class="text-xs text-slate-500">รับ • 2 ก.ย. 2568</div>
+              <div class="font-medium text-slate-900 mt-1 line-clamp-2">รับสำเนาหนังสือเวียนด่วนที่สุด</div>
+              <div class="text-xs text-slate-600 mt-1">เลขทะเบียน: <span class="font-mono">RB-0003</span></div>
+              <div class="flex items-center gap-2 mt-2">
+                <button class="btn-secondary">ดาวน์โหลด</button>
+                <button class="btn-secondary">อ้างถึง</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Group: สิงหาคม 2025 -->
+      <div class="rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div class="flex items-center justify-between px-4 py-3 border-b border-slate-100">
+          <div>
+            <div class="text-base font-semibold text-slate-900">แฟ้ม: 2025-08</div>
+            <div class="text-xs text-slate-500 mt-0.5">2 เอกสาร</div>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div class="border rounded-xl p-3 bg-slate-50">
+              <div class="text-xs text-slate-500">รับ • 21 ส.ค. 2568</div>
+              <div class="font-medium text-slate-900 mt-1 line-clamp-2">รายงานผลการดำเนินงานไตรมาส 2</div>
+              <div class="text-xs text-slate-600 mt-1">เลขทะเบียน: <span class="font-mono">RB-0002</span></div>
+              <div class="flex items-center gap-2 mt-2">
+                <button class="btn-secondary">ดาวน์โหลด</button>
+                <button class="btn-secondary">อ้างถึง</button>
+              </div>
+            </div>
+
+            <div class="border rounded-xl p-3 bg-slate-50">
+              <div class="text-xs text-slate-500">ส่ง • 5 ส.ค. 2568</div>
+              <div class="font-medium text-slate-900 mt-1 line-clamp-2">ส่งเอกสารชี้แจงงบประมาณโครงการ B</div>
+              <div class="text-xs text-slate-600 mt-1">เลขทะเบียน: <span class="font-mono">SB-0043</span></div>
+              <div class="flex items-center gap-2 mt-2">
+                <button class="btn-secondary">ดาวน์โหลด</button>
+                <button class="btn-secondary">อ้างถึง</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </body>
+</html>

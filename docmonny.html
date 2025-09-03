@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บันทึกหนังสือส่ง</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-4">
+        <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
+            
+            <form id="outgoingForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                
+
+               
+
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700">จากหน่วยงาน <span class="text-red-500">*</span></label>
+                    <input class="w-full p-2 border rounded-md" type="text" name="from" required>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700">ถึงสมาชิก <span class="text-red-500">*</span></label>
+                    <select class="w-full p-2 border rounded-md" name="channel">
+                        <option value="ไปรษณีย์">เจ้าหน้าที่การเงิน 1</option>
+                        <option value="FAX">เจ้าหน้าที่การเงิน 2</option>
+                        <option value="Email">เจ้าหน้าที่การเงิน 3</option>                        
+                    </select>
+                </div>
+
+
+                <div class="md:col-span-2 space-y-2">
+                    <label class="block text-sm font-medium text-gray-700">เรียน</label>
+                    <input class="w-full p-2 border rounded-md" type="text" name="attention">
+                </div>
+
+                <div class="md:col-span-2 space-y-2">
+                    <label class="block text-sm font-medium text-gray-700">เรื่อง <span class="text-red-500">*</span></label>
+                    <input class="w-full p-2 border rounded-md" type="text" name="subject" required>
+                </div>
+
+                <div class="md:col-span-2 space-y-2">
+                    <label class="block text-sm font-medium text-gray-700">รายละเอียด</label>
+                    <textarea class="w-full p-2 border rounded-md" name="details" rows="3"></textarea>
+                </div>
+
+                <div class="md:col-span-2 space-y-2">
+                    <label class="block text-sm font-medium text-gray-700">ผู้บันทึก</label>
+                    <input class="w-full p-2 border rounded-md" type="text" name="recorder">
+                </div>
+
+                <div class="md:col-span-2 space-y-2">
+                    <label class="block text-sm font-medium text-gray-700">แนบไฟล์ (หลายไฟล์)</label>
+                    <input type="file" multiple class="block w-full text-sm">
+                    <div id="filesContainer"></div>
+                </div>
+
+                <div class="md:col-span-2 flex justify-end">
+                    <button type="submit" class="flex items-center bg-gray-800 text-white text-xs px-3 py-1.5 rounded-lg hover:bg-gray-700">
+                        <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        บันทึก
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('outgoingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            const files = Array.from(form.querySelector('input[type="file"]').files);
+
+            if (!data.typeDoc || !data.subject || !data.from || !data.to) {
+                alert("กรุณากรอกข้อมูลประเภทหนังสือ, เรื่อง, จากหน่วยงาน และ ถึงหน่วยงาน");
+                return;
+            }
+
+            // Handle form submission
+            console.log({ ...data, files });
+
+            // Reset form
+            form.reset();
+            document.getElementById('filesContainer').innerHTML = '';
+        });
+
+        document.querySelector('input[type="file"]').addEventListener('change', function(e) {
+            const files = Array.from(e.target.files);
+            const container = document.getElementById('filesContainer');
+            container.innerHTML = '';
+
+            if (files.length > 0) {
+                const table = document.createElement('table');
+                table.className = 'w-full mt-2 text-sm border';
+
+                const thead = document.createElement('thead');
+                const trHead = document.createElement('tr');
+                trHead.className = 'bg-gray-100 border-b';
+
+                const thFile = document.createElement('th');
+                thFile.className = 'py-1 px-2 text-left';
+                thFile.textContent = 'ไฟล์';
+
+                const thSize = document.createElement('th');
+                thSize.className = 'py-1 px-2 text-left';
+                thSize.textContent = 'ขนาด';
+
+                const thAction = document.createElement('th');
+                thAction.className = 'py-1 px-2';
+                thAction.textContent = 'ลบ';
+
+                trHead.appendChild(thFile);
+                trHead.appendChild(thSize);
+                trHead.appendChild(thAction);
+                thead.appendChild(trHead);
+                table.appendChild(thead);
+
+                const tbody = document.createElement('tbody');
+                files.forEach((file, idx) => {
+                    const tr = document.createElement('tr');
+                    tr.className = 'border-b';
+
+                    const tdFile = document.createElement('td');
+                    tdFile.className = 'py-1 px-2';
+                    tdFile.textContent = file.name;
+
+                    const tdSize = document.createElement('td');
+                    tdSize.className = 'py-1 px-2';
+                    tdSize.textContent = `${(file.size / 1024).toFixed(1)} KB`;
+
+                    const tdAction = document.createElement('td');
+                    tdAction.className = 'py-1 px-2 text-center';
+
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.className = 'text-red-600';
+                    button.textContent = 'ลบ';
+                    button.onclick = function() {
+                        tr.remove();
+                        if (tbody.children.length === 0) {
+                            container.removeChild(table);
+                        }
+                    };
+
+                    tdAction.appendChild(button);
+                    tr.appendChild(tdFile);
+                    tr.appendChild(tdSize);
+                    tr.appendChild(tdAction);
+                    tbody.appendChild(tr);
+                });
+
+                table.appendChild(tbody);
+                container.appendChild(table);
+            }
+        });
+    </script>
+</body>
+</html>

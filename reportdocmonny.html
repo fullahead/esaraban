@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>รายงานจัดส่งหนังสือเรียกเก็บ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.257.0/dist/lucide.min.js"></script>
+  <!-- <style>
+    /* small helpers */
+    .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    /* table zebra */
+    tbody tr:nth-child(odd) { background: white; }
+    tbody tr:nth-child(even) { background: #f8fafc; }
+  </style> -->
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+  <div class="max-w-7xl mx-auto px-4 py-6">
+
+    <!-- Header -->
+    <header class="mb-6">
+      <h1 class="text-2xl font-semibold">รายงานจัดส่งหนังสือสัญญาสมาชิก</h1>
+      <p class="text-sm text-slate-500 mt-1">แสดงรายการส่งหนังสือเรียกเก็บไปยังสมาชิก/หน่วยงาน พร้อมสถานะและหมายเลขติดตาม</p>
+    </header>
+
+    <!-- Controls: summary cards + filters -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
+      <!-- Summary cards -->
+      <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex items-center gap-3">
+          <div class="p-2 rounded-xl bg-amber-50 border border-amber-100">
+            <svg class="w-6 h-6 text-amber-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h2l1 9h12l1-9h2M16 5a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          </div>
+          <div>
+            <div class="text-xs text-slate-500">จำนวนส่งทั้งหมด</div>
+            <div id="stat-total" class="text-2xl font-semibold text-slate-900">24</div>
+            <div class="text-xs text-slate-400 mt-1">ช่วงที่เลือก</div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex items-center gap-3">
+          <div class="p-2 rounded-xl bg-green-50 border border-green-100">
+            <svg class="w-6 h-6 text-green-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <div>
+            <div class="text-xs text-slate-500">จัดส่งสำเร็จ</div>
+            <div id="stat-success" class="text-2xl font-semibold text-slate-900">18</div>
+            <div class="text-xs text-slate-400 mt-1">มีหมายเลขติดตาม</div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex items-center gap-3">
+          <div class="p-2 rounded-xl bg-red-50 border border-red-100">
+            <svg class="w-6 h-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </div>
+          <div>
+            <div class="text-xs text-slate-500">ล้มเหลว / รอเคลียร์</div>
+            <div id="stat-failed" class="text-2xl font-semibold text-slate-900">6</div>
+            <div class="text-xs text-slate-400 mt-1">ต้องตรวจสอบ</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+        <div class="flex flex-col gap-3">
+          <div class="text-sm font-medium text-slate-700">ตัวกรอง</div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <div>
+              <label class="block text-xs text-slate-500 mb-1">วันที่ (จาก)</label>
+              <input id="date-from" type="date" class="w-full input" />
+            </div>
+            <div>
+              <label class="block text-xs text-slate-500 mb-1">วันที่ (ถึง)</label>
+              <input id="date-to" type="date" class="w-full input" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs text-slate-500 mb-1">สถานะ</label>
+            <select id="status-filter" class="w-full input">
+              <option value="ALL">ทั้งหมด</option>
+              <option value="SENT">จัดส่งสำเร็จ</option>
+              <option value="PENDING">รอจัดส่ง</option>
+              <option value="FAILED">ล้มเหลว</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs text-slate-500 mb-1">ค้นหา (รหัส, ชื่อ, เลขติดตาม)</label>
+            <div class="relative">
+              <input id="q" type="search" placeholder="ค้นหา..." class="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-3 py-2 text-sm focus:ring-2 focus:ring-slate-300" />
+              <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z"/></svg>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 pt-2">
+            <button id="applyFilters" class="btn-secondary w-full">ประยุกต์ใช้</button>
+            <button id="resetFilters" class="btn-secondary w-full bg-white">รีเซ็ต</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions: Export / Print / Refresh -->
+    <div class="flex items-center justify-between gap-4 mb-4">
+      <div class="flex items-center gap-2">
+        <button id="exportCsv" class="btn-secondary"><svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> ส่งออก CSV</button>
+        <button id="printBtn" class="btn-secondary"><svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" d="M6 9V2h12v7M6 17v5h12v-5M9 12h6"/></svg> พิมพ์</button>
+        <button id="refreshBtn" class="btn-secondary"><svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" d="M4 4v6h6M20 20v-6h-6"/></svg> รีเฟรช</button>
+      </div>
+
+      <div class="text-sm text-slate-500">ผลลัพธ์: <span id="result-count">24</span> รายการ</div>
+    </div>
+
+    <!-- Table -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+      <div class="overflow-x-auto">
+        <table id="reportTable" class="min-w-full text-sm">
+          <thead class="bg-slate-50">
+            <tr class="text-left text-slate-600">
+              <th class="px-4 py-3">#</th>
+              <th class="px-4 py-3">รหัส</th>
+              <th class="px-4 py-3">ชื่อผู้รับ / สมาชิก</th>
+              <th class="px-4 py-3">ที่อยู่/หน่วยงาน</th>
+              <th class="px-4 py-3">วันที่จัดส่ง</th>
+              <th class="px-4 py-3">ช่องทาง</th>
+              <th class="px-4 py-3">เลขติดตาม</th>
+              <th class="px-4 py-3">สถานะ</th>
+              <th class="px-4 py-3 text-right">จำนวนเงิน (฿)</th>
+            </tr>
+          </thead>
+          <tbody id="tbody" class="text-slate-700">
+            <!-- ข้อมูลตัวอย่าง (JS จะกรอง/อัปเดต) -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div class="flex items-center justify-between px-4 py-3 border-t bg-slate-50">
+        <div class="text-xs text-slate-500">แสดง <span id="showing">1-10</span> จาก <span id="total">24</span> รายการ</div>
+        <div class="flex items-center gap-2">
+          <button id="prevPage" class="btn-secondary px-3 py-1 text-xs">ก่อนหน้า</button>
+          <button id="nextPage" class="btn-secondary px-3 py-1 text-xs">ถัดไป</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Small Tailwind helper classes injected -->
+  <!-- <style>
+    .input { @apply bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-slate-300; }
+    .btn-secondary { @apply inline-flex items-center gap-2 border border-slate-200 bg-white px-3 py-2 rounded-xl text-sm hover:bg-slate-50; }
+  </style> -->
+
+  <!-- Minimal JS for demo filtering, CSV export, pagination -->
+  <script>
+    // Sample dataset (you can replace with server data)
+    const data = [
+      { id: 1, code: "RC-20250801-0001", name: "นายสมหมาย ใจดี", address: "123 ถ.ประชา อ.เมือง", date: "2025-08-01", channel: "ไปรษณีย์", tracking: "TH000111222", status: "SENT", amount: 1250.00 },
+      { id: 2, code: "RC-20250802-0002", name: "นางสาวสายฝน แก้วใส", address: "456 ถ.สงบสุข อ.เมือง", date: "2025-08-02", channel: "ส่งถึงบ้าน", tracking: "", status: "PENDING", amount: 980.00 },
+      { id: 3, code: "RC-20250803-0003", name: "สมาชิก เลขที่ 12345", address: "78 หมู่ 9 ต.ตัวอย่าง", date: "2025-08-03", channel: "Email", tracking: "", status: "FAILED", amount: 500.00 },
+      { id: 4, code: "RC-20250805-0004", name: "บริษัท ตัวอย่าง จำกัด", address: "9/9 ถ.ธุรกิจ", date: "2025-08-05", channel: "ไปรษณีย์", tracking: "TH000333444", status: "SENT", amount: 4300.00 },
+      { id: 5, code: "RC-20250806-0005", name: "นิติบุคคล A", address: "ต.ตัวอย่าง อ.ตัวอย่าง", date: "2025-08-06", channel: "Messenger", tracking: "", status: "PENDING", amount: 1500.00 },
+      { id: 6, code: "RC-20250808-0006", name: "สมาชิก เลขที่ 54321", address: "อ.ตัวอย่าง", date: "2025-08-08", channel: "ไปรษณีย์", tracking: "TH000555666", status: "SENT", amount: 760.00 },
+      { id: 7, code: "RC-20250810-0007", name: "นายทดสอบ ทดสอบ", address: "100/1 ถ.ทดสอบ", date: "2025-08-10", channel: "ไปรษณีย์", tracking: "", status: "FAILED", amount: 220.00 },
+      { id: 8, code: "RC-20250812-0008", name: "นาง ตัวอย่าง", address: "ถ.สุขสบาย", date: "2025-08-12", channel: "Email", tracking: "", status: "SENT", amount: 640.00 },
+      { id: 9, code: "RC-20250815-0009", name: "บริษัท B", address: "ห้างสรรพสินค้า", date: "2025-08-15", channel: "ไปรษณีย์", tracking: "TH000777888", status: "SENT", amount: 9120.00 },
+      { id: 10, code: "RC-20250818-0010", name: "นางใจดี ใจงาม", address: "ซ.ใจดี", date: "2025-08-18", channel: "ส่งถึงบ้าน", tracking: "", status: "PENDING", amount: 300.00 },
+      // more demo items (repeat to reach more rows)
+    ];
+
+    // duplicate to demonstrate pagination
+    while (data.length < 24) {
+      const next = {...data[(data.length-1)%10]};
+      const idx = data.length + 1;
+      next.id = idx;
+      next.code = `RC-202508${String(10+idx).slice(-2)}-${String(1000+idx).slice(-4)}`;
+      next.date = "2025-08-" + String((idx%28)+1).padStart(2,'0');
+      data.push(next);
+    }
+
+    // state
+    let filtered = [...data];
+    let page = 1;
+    const perPage = 10;
+
+    // elements
+    const tbody = document.getElementById('tbody');
+    const resultCount = document.getElementById('result-count');
+    const totalEl = document.getElementById('total');
+    const showingEl = document.getElementById('showing');
+    const statTotal = document.getElementById('stat-total');
+    const statSuccess = document.getElementById('stat-success');
+    const statFailed = document.getElementById('stat-failed');
+
+    // render table page
+    function render() {
+      // counts
+      resultCount.textContent = filtered.length;
+      totalEl.textContent = filtered.length;
+      statTotal.textContent = filtered.length;
+      statSuccess.textContent = filtered.filter(r => r.status==='SENT').length;
+      statFailed.textContent = filtered.filter(r => r.status==='FAILED').length;
+
+      const start = (page-1)*perPage;
+      const end = start + perPage;
+      const pageItems = filtered.slice(start,end);
+
+      // update showing
+      const from = filtered.length === 0 ? 0 : start + 1;
+      showingEl.textContent = `${from}-${Math.min(end, filtered.length)}`;
+      document.getElementById('showing').textContent = showingEl.textContent;
+
+      // render rows
+      tbody.innerHTML = pageItems.map((r, idx) => `
+        <tr>
+          <td class="px-4 py-3 text-sm text-slate-600">${r.id}</td>
+          <td class="px-4 py-3 font-mono text-xs">${r.code}</td>
+          <td class="px-4 py-3 max-w-sm line-clamp-2">${escapeHtml(r.name)}</td>
+          <td class="px-4 py-3 max-w-xs line-clamp-2">${escapeHtml(r.address)}</td>
+          <td class="px-4 py-3">${r.date}</td>
+          <td class="px-4 py-3">${r.channel}</td>
+          <td class="px-4 py-3 font-mono">${r.tracking || '-'}</td>
+          <td class="px-4 py-3">
+            ${statusBadge(r.status)}
+          </td>
+          <td class="px-4 py-3 text-right font-mono">${r.amount.toFixed(2)}</td>
+        </tr>
+      `).join('');
+
+      // update totals
+      resultCount.textContent = filtered.length;
+      document.getElementById('result-count').textContent = filtered.length;
+    }
+
+    function statusBadge(s) {
+      if (s === 'SENT') return `<span class="text-[11px] px-2 py-1 rounded-full bg-green-50 text-green-700 border border-green-100">จัดส่งสำเร็จ</span>`;
+      if (s === 'PENDING') return `<span class="text-[11px] px-2 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-100">รอจัดส่ง</span>`;
+      return `<span class="text-[11px] px-2 py-1 rounded-full bg-red-50 text-red-700 border border-red-100">ล้มเหลว</span>`;
+    }
+
+    function escapeHtml(text) {
+      return String(text || '').replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]); });
+    }
+
+    // apply filters
+    document.getElementById('applyFilters').addEventListener('click', () => {
+      const q = (document.getElementById('q').value || '').trim().toLowerCase();
+      const status = document.getElementById('status-filter').value;
+      const from = document.getElementById('date-from').value;
+      const to = document.getElementById('date-to').value;
+      filtered = data.filter(r => {
+        if (status !== 'ALL' && r.status !== status) return false;
+        if (from && r.date < from) return false;
+        if (to && r.date > to) return false;
+        if (!q) return true;
+        return [r.code, r.name, r.address, r.tracking, r.channel].join(' ').toLowerCase().includes(q);
+      });
+      page = 1;
+      render();
+    });
+
+    document.getElementById('resetFilters').addEventListener('click', () => {
+      document.getElementById('q').value = '';
+      document.getElementById('status-filter').value = 'ALL';
+      document.getElementById('date-from').value = '';
+      document.getElementById('date-to').value = '';
+      filtered = [...data];
+      page = 1;
+      render();
+    });
+
+    // pagination
+    document.getElementById('prevPage').addEventListener('click', () => {
+      if (page > 1) { page--; render(); }
+    });
+    document.getElementById('nextPage').addEventListener('click', () => {
+      if (page * perPage < filtered.length) { page++; render(); }
+    });
+
+    // export CSV
+    document.getElementById('exportCsv').addEventListener('click', () => {
+      const headers = ['id','code','name','address','date','channel','tracking','status','amount'];
+      const rows = filtered.map(r => headers.map(h => `"${String(r[h] || '').replace(/"/g,'""')}"`).join(','));
+      const csv = [headers.join(','), ...rows].join('\n');
+      const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'report_collect.csv';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    // print
+    document.getElementById('printBtn').addEventListener('click', () => {
+      window.print();
+    });
+
+    // refresh (demo)
+    document.getElementById('refreshBtn').addEventListener('click', () => {
+      filtered = [...data];
+      page = 1;
+      document.getElementById('q').value = '';
+      document.getElementById('status-filter').value = 'ALL';
+      document.getElementById('date-from').value = '';
+      document.getElementById('date-to').value = '';
+      render();
+    });
+
+    // initial render
+    render();
+
+    // Enable lucide icons (if lucide available)
+    if (window.lucide) lucide.createIcons();
+  </script>
+</body>
+</html>

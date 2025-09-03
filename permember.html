@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>กำหนดผู้ใช้งานสมาชิก</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 min-h-screen p-8">
+
+  <div class="max-w-5xl mx-auto bg-white rounded-2xl shadow p-6 space-y-6">
+
+    <!-- Title -->
+    <h1 class="text-xl font-bold text-slate-700 border-b pb-2">
+      กำหนดผู้ใช้งานสมาชิก
+    </h1>
+
+    <!-- ฟอร์มเพิ่ม/แก้ไขผู้ใช้งาน -->
+    <form class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- รหัสผู้ใช้งาน -->
+      <div>
+        <label class="block text-sm font-medium text-slate-600 mb-1">รหัสผู้ใช้งาน</label>
+        <input type="text" placeholder="เช่น: USR001"
+          class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      </div>
+
+      <!-- ชื่อ-นามสกุล -->
+      <div>
+        <label class="block text-sm font-medium text-slate-600 mb-1">ชื่อ-นามสกุล</label>
+        <input type="text" placeholder="กรอกชื่อ-นามสกุล"
+          class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      </div>
+
+      <!-- รหัสผ่าน -->
+      <div>
+        <label class="block text-sm font-medium text-slate-600 mb-1">รหัสผ่าน</label>
+        <input type="password" placeholder="********"
+          class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      </div>
+
+      
+      <!-- สิทธิการใช้งาน -->
+      <div class="md:col-span-2">
+        <label class="block text-sm font-medium text-slate-600 mb-1">สิทธิการใช้งาน</label>
+        <select
+          class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+          <option>ใช้งาน</option>
+          <option selected>ระงับการใช้งาน</option>         
+        </select>
+      </div>
+
+      <!-- ปุ่มจัดการ -->
+      <div class="flex space-x-2 mt-4">
+  <!-- ปุ่มเพิ่ม -->
+  <button class="flex items-center px-4 py-2  bg-gray-800 text-white rounded-lg shadow hover:bg-green-600 transition">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+    </svg>
+    เพิ่ม
+  </button>
+
+  <!-- ปุ่มแก้ไข -->
+  <button class="flex items-center px-4 py-2  bg-gray-800 text-white rounded-lg shadow hover:bg-blue-600 transition">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536M9 13h6m2 8H7a2 2 0 01-2-2V7a2 
+      2 0 012-2h7l5 5v9a2 2 0 01-2 2z" />
+    </svg>
+    แก้ไข
+  </button>
+
+  <!-- ปุ่มลบ -->
+  <button class="flex items-center px-4 py-2 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 transition">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 
+      21H7.862a2 2 0 01-1.995-1.858L5 
+      7m5 4v6m4-6v6m1-10V4a1 1 0 
+      00-1-1h-4a1 1 0 00-1 1v3m-4 
+      0h14" />
+    </svg>
+    ลบ
+  </button>
+
+    <!-- ปุ่มเพิ่ม excel-->
+  <button class="flex items-center px-4 py-2  bg-blue-800 text-white rounded-lg shadow hover:bg-green-600 transition">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 0 1-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0 1 12 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M12 10.875v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125M13.125 12h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125M20.625 12c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5M12 14.625v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 14.625c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m0 1.5v-1.5m0 0c0-.621.504-1.125 1.125-1.125m0 0h7.5" />
+</svg>
+
+    นำเข้า Excel
+  </button>
+
+</div>
+
+    </form>
+
+    <!-- ตารางผู้ใช้งาน -->
+    <div class="overflow-x-auto">
+      <table class="w-full border text-sm text-left">
+        <thead class="bg-slate-200 text-slate-700">
+          <tr>
+            <th class="px-3 py-2 border">รหัสผู้ใช้งาน</th>
+            <th class="px-3 py-2 border">ชื่อ-นามสกุล</th>            
+            <th class="px-3 py-2 border">สิทธิการใช้งาน</th>
+            <th class="px-3 py-2 border text-center">การจัดการ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="hover:bg-slate-50">
+            <td class="px-3 py-2 border">USR001</td>
+            <td class="px-3 py-2 border">สมชาย ใจดี</td>           
+            <td class="px-3 py-2 border">ผู้ดูแลระบบ</td>
+            <td class="px-3 py-2 border text-center space-x-1">
+              <button class=" bg-gray-800 text-white px-2 py-1 rounded">แก้ไข</button>
+              <button class="bg-red-500 text-white px-2 py-1 rounded">ลบ</button>
+            </td>
+          </tr>
+          <tr class="hover:bg-slate-50">
+            <td class="px-3 py-2 border">USR002</td>
+            <td class="px-3 py-2 border">สายฝน แก้วใส</td>           
+            <td class="px-3 py-2 border">ผู้ใช้งานทั่วไป</td>
+            <td class="px-3 py-2 border text-center space-x-1">
+              <button class=" bg-gray-800 text-white px-2 py-1 rounded">แก้ไข</button>
+              <button class="bg-red-500 text-white px-2 py-1 rounded">ลบ</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>กำหนดข้อมูลพื้นฐาน</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- <style>
+    .btn-primary {
+      @apply inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium bg-sky-600 text-white hover:bg-sky-700;
+    }
+    .field-note { font-size: 0.875rem; color: #64748b; } /* text-slate-500-ish */
+  </style> -->
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+  <main class="max-w-4xl mx-auto p-6">
+    <header class="mb-6">
+      <h1 class="text-2xl font-semibold">กำหนดข้อมูลพื้นฐาน</h1>
+      <p class="text-sm text-slate-600 mt-1">กรอกค่าพื้นฐานของระบบ</p>
+    </header>
+
+    <form class="space-y-6 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+
+      <!-- 1. ชื่อสหกรณ์ -->
+      <section class="space-y-2">
+        <label class="block text-sm font-medium">ชื่อสหกรณ์</label>
+        <input type="text" name="coopName" placeholder="เช่น สหกรณ์ออมทรัพย์ตัวอย่าง จำกัด" 
+               class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-200" />
+      </section>
+
+      <!-- 2. ปีบัญชี (เก็บเป็น ค.ศ. แสดงเป็น พ.ศ.) -->
+      <section class="space-y-2">
+        <label class="block text-sm font-medium">ปีบัญชี</label>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 items-center">
+          <div>
+            <input id="year-ad" name="yearAd" type="number" min="1900" max="3000" value="2025"
+                   class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-200" />           
+          </div>
+          
+        </div>
+      </section>
+
+      <!-- 3. การตั้งค่าเลขหนังสือส่ง (ประเภทต่าง ๆ) -->
+      <section class="space-y-2">
+        <label class="block text-sm font-medium">แบบเลขที่หนังสือส่ง (กำหนดรูปแบบ)</label>
+        <div class="grid grid-cols-1 gap-3">
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 items-center">
+            <div class="text-sm font-medium">ส่งภายนอก</div>
+            <input name="outgoingExternalFormat" placeholder="เช่น สอ.อจ.xxx/25xx" 
+                   class="sm:col-span-2 w-full border rounded-lg px-3 py-2" />          
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 items-center">
+            <div class="text-sm font-medium">บันทึกข้อความ (ส่ง)</div>
+            <input name="outgoingMemoFormat" placeholder="เช่น สอ.อจ.1.xxx/25xx" 
+                   class="sm:col-span-2 w-full border rounded-lg px-3 py-2" />           
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 items-center">
+            <div class="text-sm font-medium">ประกาศ</div>
+            <input name="announcementFormat" placeholder="เช่น xxx/25xx" 
+                   class="sm:col-span-2 w-full border rounded-lg px-3 py-2" />          
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 items-center">
+            <div class="text-sm font-medium">คำสั่ง</div>
+            <input name="orderFormat" placeholder="เช่น xxx/25xx" 
+                   class="sm:col-span-2 w-full border rounded-lg px-3 py-2" />            
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 4. เลขที่หนังสือรับ -->
+      <section class="space-y-2">
+        <label class="block text-sm font-medium">แบบเลขที่หนังสือรับ</label>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 items-center">
+          <input name="incomingFormat" placeholder="เช่น xxx/25xx" class="sm:col-span-2 w-full border rounded-lg px-3 py-2" />          
+        </div>
+      </section>
+
+      
+
+      <!-- Actions -->
+      <div class="flex items-center justify-end gap-3">
+        <button type="reset" class="px-4 py-2 rounded-lg border bg-white text-slate-700 hover:bg-slate-50">รีเซ็ต</button>
+        <button type="submit" class="btn-primary">บันทึกข้อมูล</button>
+      </div>
+
+      <!-- Small help / note -->
+      <div class="text-xs text-slate-500 mt-2">
+        <strong>หมายเหตุ:</strong> ระบบจะเก็บค่าปีในฟอร์มเป็น <em>ค.ศ.</em> (field ที่ส่งไปยังเซิร์ฟเวอร์เป็นปี ค.ศ.) แต่แสดงผลในอินเทอร์เฟซเป็น พ.ศ. เพื่อความคุ้นเคยของผู้ใช้งานไทย
+      </div>
+
+    </form>
+  </main>
+
+  <!-- เล็ก ๆ น้อย ๆ: ซิงค์ ค.ศ. ↔ พ.ศ. (JS เล็กน้อย เพื่อ UX) -->
+  <script>
+    // (function(){
+    //   const inputAd = document.getElementById('year-ad');
+    //   const inputBe = document.getElementById('year-be');
+
+    //   const syncToBe = () => {
+    //     const ad = Number(inputAd.value) || null;
+    //     if (!ad) { inputBe.value = ''; return; }
+    //     inputBe.value = (ad + 543);
+    //   };
+
+    //   // initial
+    //   syncToBe();
+
+    //   // เมื่อผู้ใช้แก้ปี ค.ศ. ให้แสดงปี พ.ศ.
+    //   inputAd.addEventListener('input', syncToBe);
+
+    //   // ถ้าต้องการให้ผู้ใช้แก้ปี พ.ศ. แล้วแปลงกลับเป็น ค.ศ. สามารถเพิ่มได้
+    //   // (ปัจจุบันปี พ.ศ. เป็นช่อง disabled เพื่อแสดงอย่างเดียว)
+    // })();
+  </script>
+</body>
+</html>
