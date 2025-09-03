@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>เข้าสู่ระบบ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 min-h-screen flex items-center justify-center">
+
+  <!-- Login Card -->
+  <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+    <!-- Logo / Title -->
+    <div class="text-center mb-6">
+      <div class="w-16 h-16 mx-auto bg-slate-900 text-white flex items-center justify-center rounded-full text-2xl font-bold">
+        eS
+      </div>
+      <h2 class="mt-4 text-2xl font-bold text-slate-800">เข้าสู่ระบบ</h2>
+      <p class="text-sm text-slate-500">ระบบงานสารบรรณอิเล็กทรอนิกส์</p>
+    </div>
+
+    <!-- Form -->
+    <form id="loginForm" class="space-y-5">
+      <!-- Username -->
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">
+          ชื่อผู้ใช้
+        </label>
+        <input
+          type="text"
+          class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400"
+          placeholder="กรอกชื่อผู้ใช้"
+        />
+      </div>
+
+      <!-- Password -->
+     <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">
+          รหัสผ่าน
+        </label>
+        <input
+          type="password"
+          class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400"
+          placeholder="กรอกรหัสผ่าน"
+        />
+      </div>
+
+       <!-- User Role -->
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">
+          ประเภทผู้ใช้งาน
+        </label>
+        <select
+          id="role"
+          class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400"
+          required
+        >
+          <option value="">-- เลือกประเภทผู้ใช้ --</option>
+          <option value="staff">เจ้าหน้าที่ทั่วไป</option>
+          <option value="finance">เจ้าหน้าที่การเงิน</option>
+          <option value="member">สมาชิก</option>
+        </select>
+      </div>
+
+      <!-- Remember + Forgot -->
+      <!-- <div class="flex items-center justify-between text-sm">
+        <label class="flex items-center gap-2">
+          <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500" />
+          <span class="text-slate-600">จำการเข้าสู่ระบบ</span>
+        </label>
+        <a href="#" class="text-blue-600 hover:underline">
+          ลืมรหัสผ่าน?
+        </a>
+      </div>  -->
+
+      <!-- Button -->
+      <button
+        type="submit"
+        class="block text-center w-full px-4 py-2 rounded-xl bg-slate-900 text-white font-medium hover:bg-blue-700 shadow"
+      >
+        เข้าสู่ระบบ
+      </button>
+    </form>
+
+    <!-- Footer -->
+    <!-- <p class="mt-6 text-center text-sm text-slate-500">
+      ยังไม่มีบัญชี? 
+      <a href="#" class="text-blue-600 hover:underline">สมัครสมาชิก</a>
+    </p> -->
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const role = document.getElementById("role").value;
+
+      // redirect ตาม role
+      if (role === "staff") {
+        window.location.href = "index.html"; // เจ้าหน้าที่
+      } else if (role === "finance") {
+        window.location.href = "readdocfn.html"; // เจ้าหน้าที่การเงิน
+      } else if (role === "member") {
+        window.location.href = "readdocmb.html"; // สมาชิก
+      } else {
+        alert("กรุณาเลือกประเภทผู้ใช้งาน");
+      }
+    });
+  </script>
+
+</body>
+</html>
