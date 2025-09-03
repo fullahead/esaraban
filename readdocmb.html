@@ -53,7 +53,7 @@
                 <span class="text-sm font-medium">เอกสาร</span>
             </button>
 
-            <button data-page="income"
+            <button data-page="changepass"
                 class="nav-item flex items-center gap-3 w-full text-left px-3 py-2 rounded-xl transition hover:bg-white/10 hover:text-white">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
@@ -63,7 +63,7 @@
                 <span class="text-sm font-medium">เปลี่ยนรหัสผ่าน</span>
             </button>
 
-            <button data-page="outgoing"
+            <button data-page="logout"
                 class="nav-item flex items-center gap-3 w-full text-left px-3 py-2 rounded-xl transition hover:bg-white/10 hover:text-white">
                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
@@ -126,6 +126,14 @@
                     .querySelectorAll('aside button')
                     .forEach((b) => b.classList.remove('active-menu'));
                 btn.classList.add('active-menu');
+
+                // เพิ่มเงื่อนไขเพื่อเปลี่ยนเส้นทางเมื่อคลิกปุ่ม "ออกจากระบบ"
+                if (btn.getAttribute('data-page') === 'logout') {
+                    window.location.href = 'login.html';
+                }
+                if (btn.getAttribute('data-page') === 'changepass') {
+                    window.location.href = 'changepass.html';
+                }
             });
         });
     </script>
